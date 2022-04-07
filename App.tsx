@@ -1,36 +1,48 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image,StyleSheet, Text, View, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { useState} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Stock from './components/Stock.tsx';
-import logo from './assets/logo.png';
-
+import Home from "./components/Home";
+import Pick from "./components/Pick";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+import { Base, Typography } from './styles';
 //6c76592d46c196c26798a89f1090c4c7
+const Tab = createBottomTabNavigator();
+const routeIcons = {
+  "Lager": "home",
+  "Plock": "list",
+};
 
 export default function App() {
+  const [products, setProducts] = useState([]);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView>
-      <View style={styles.base}>
-        <Image source={logo} style={{ width: 320, height: 240 }} />
-        <Stock />
-        <StatusBar style="auto" />
-      </View>
-      </ScrollView>
+      <SafeAreaView style={Base.container}>
+        <NavigationContainer>
+        <Tab.Navigator screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+        let iconName = routeIcons[route.name] || "alert";
+      
+        return <Ionicons name={iconName} size={size} color={color} />;
+      },
+      tabBarActiveTintColor: '#3C6478',
+      tabBarInactiveTintColor: 'gray',
+    })}
+  >
+    <Tab.Screen name="Lager">
+      {() => <Home products={products} setProducts={setProducts}/>
+      }
+    </Tab.Screen>
+    <Tab.Screen name="Plock">
+      {()=> <Pick setProducts={setProducts}/>}
+    </Tab.Screen>
+  </Tab.Navigator>
+      </NavigationContainer>
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  base: {
-    flex: 1,
-    textAlign: 'center',
-    backgroundColor: '#eeeeee',
-    paddingLeft: 12,
-    paddingRight: 12,
-  }
-});
 
 
