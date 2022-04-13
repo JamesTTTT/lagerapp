@@ -4,6 +4,7 @@ import { useState} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from "./components/Home";
 import Pick from "./components/Pick";
+import Deliveries from './components/Deliveries';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -38,6 +39,7 @@ export default function App() {
     <Tab.Screen name="Plock">
       {()=> <Pick setProducts={setProducts}/>}
     </Tab.Screen>
+    <Tab.Screen name="Inleveranser" component={Deliveries}/>
   </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
