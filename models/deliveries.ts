@@ -2,23 +2,23 @@ import config from "../config/config.json"
 import Delivery from "../interfaces/delivery";
 
 const deliveries = {
-    Delivery: async function Delivery(delivery) {
-        const response = await fetch(`${config.base_url}/products?api_key=${config.api_key}`);
+    getDeliveries: async function getDeliveries() {
+        const response = await fetch(`${config.base_url}/deliveries?api_key=${config.api_key}`);
         const result = await response.json();
 
         return result.data;
     },
-    updateProduct: async function updateProduct(product) {
-        product.api_key = config.api_key
+    addDelivery: async function addDelivery(delivery) {
+        delivery.api_key = config.api_key
 
-        await fetch(`${config.base_url}/products`, {
-            body: JSON.stringify(product),
+        await fetch(`${config.base_url}/deliveries`, {
+            body: JSON.stringify(delivery),
             headers: {
                 'content-type': 'application/json'
             },
-            method:'PUT'
+            method:'POST'
         })
     },
 };
 
-export default products
+export default deliveries

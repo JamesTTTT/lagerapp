@@ -23,3 +23,7 @@ export const altnormal = {
     marginTop: 28,
     marginBottom: 7,
 };
+
+export const label = {
+    fontSize: 25,
+}

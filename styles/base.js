@@ -18,4 +18,7 @@ export const lagertext = {
   fontSize: 24,
   textAlign: 'center'
 }
-  
+
+export const delivery = {
+  margin:20,
+}

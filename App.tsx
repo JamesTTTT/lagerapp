@@ -14,6 +14,7 @@ const Tab = createBottomTabNavigator();
 const routeIcons = {
   "Lager": "home",
   "Plock": "list",
+  "Inleveranser": "cube",
 };
 
 export default function App() {
@@ -39,7 +40,9 @@ export default function App() {
     <Tab.Screen name="Plock">
       {()=> <Pick setProducts={setProducts}/>}
     </Tab.Screen>
-    <Tab.Screen name="Inleveranser" component={Deliveries}/>
+    <Tab.Screen name="Inleveranser">
+    {() => <Deliveries setProducts={setProducts}/>}
+    </Tab.Screen>
   </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />

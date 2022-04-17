@@ -1,14 +1,15 @@
 // components/DeliveryForm.tsx
 import { useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Platform, ScrollView, Text, TextInput, Button, View } from "react-native";
+import { Platform, ScrollView, Text, TextInput, Button, View, KeyboardAvoidingView} from "react-native";
 import { Base, Typography, Forms } from '../styles';
 import { Picker } from '@react-native-picker/picker';
 import productModel from "../models/product";
+import deliveryModel from "../models/deliveries"
 
 import Delivery from '../interfaces/delivery';
 
-export default function DeliveryForm({ navigation }) {
+export default function DeliveryForm({navigation, setProducts  }) {
     const [delivery, setDelivery] = useState<Partial<Delivery>>({});
     const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
 
@@ -21,14 +22,16 @@ export default function DeliveryForm({ navigation }) {
         };
 
         await productModel.updateProduct(updatedProduct);
-
-        navigation.navigate("List", { reload: true });
+        setProducts(await productModel.getProducts());
+        navigation.navigate("List", { reload:true });
     }
 
     return (
         <ScrollView contentContainerStyle={{ ...Base.base }}>
             <Text style={{ ...Typography.header2 }}>Ny inleverans</Text>
-
+            <KeyboardAvoidingView
+        behavior="padding"
+      >
             <DateDropDown
                 delivery={delivery}
                 setDelivery={setDelivery}/>
@@ -39,7 +42,7 @@ export default function DeliveryForm({ navigation }) {
                 setDelivery={setDelivery}
                 setCurrentProduct={setCurrentProduct}
             />
-            
+
             <Text style={{ ...Typography.label }}>Antal</Text>
             <TextInput
                 style={{ ...Forms.input }}
@@ -58,14 +61,16 @@ export default function DeliveryForm({ navigation }) {
                 }}
                 value={delivery?.comment}
             />
-
+            
             <Button
                 title="Gör inleverans"
                 onPress={() => {
                     addDelivery();
                 }}
             />
+            </KeyboardAvoidingView>
         </ScrollView>
+
     );
 };
 function ProductDropDown(props) {
