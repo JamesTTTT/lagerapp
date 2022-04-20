@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from "./components/Home";
 import Pick from "./components/Pick";
@@ -9,16 +9,26 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Base, Typography } from './styles';
+
+import Auth from "./components/Auth/Auth";
+import authModel from "./models/auth";
+
 //6c76592d46c196c26798a89f1090c4c7
 const Tab = createBottomTabNavigator();
 const routeIcons = {
   "Lager": "home",
   "Plock": "list",
   "Inleveranser": "cube",
+  "Logga in": "key",
 };
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   const [products, setProducts] = useState([]);
+
+  useEffect(async () => {
+    setIsLoggedIn(await authModel.loggedIn())
+  }, []);
 
   return (
       <SafeAreaView style={Base.container}>
@@ -43,6 +53,12 @@ export default function App() {
     <Tab.Screen name="Inleveranser">
     {() => <Deliveries setProducts={setProducts}/>}
     </Tab.Screen>
+    {isLoggedIn ?
+      <Tab.Screen name="Faktura" component={Invoices} /> :
+      <Tab.Screen name="Logga in">
+        {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+      </Tab.Screen>
+    }
   </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
