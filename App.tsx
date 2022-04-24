@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Home from "./components/Home";
 import Pick from "./components/Pick";
 import Deliveries from './components/Deliveries';
+import Invoices from './components/Invoices/Invoices';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,6 +21,7 @@ const routeIcons = {
   "Plock": "list",
   "Inleveranser": "cube",
   "Logga in": "key",
+  "Faktura": "cash-outline",
 };
 
 export default function App() {
@@ -54,7 +56,9 @@ export default function App() {
     {() => <Deliveries setProducts={setProducts}/>}
     </Tab.Screen>
     {isLoggedIn ?
-      <Tab.Screen name="Faktura" component={Invoices} /> :
+      <Tab.Screen name="Faktura">
+        {() => <Invoices setIsLoggedIn={setIsLoggedIn}/>}
+      </Tab.Screen> :
       <Tab.Screen name="Logga in">
         {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
       </Tab.Screen>
