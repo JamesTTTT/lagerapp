@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Pick from "./components/Pick";
 import Deliveries from './components/Deliveries';
 import Invoices from './components/Invoices/Invoices';
+import Ship from './components/ship/Ship';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -22,6 +23,7 @@ const routeIcons = {
   "Inleveranser": "cube",
   "Logga in": "key",
   "Faktura": "cash-outline",
+  "Skicka": "mail",
 };
 
 export default function App() {
@@ -55,6 +57,9 @@ export default function App() {
     <Tab.Screen name="Inleveranser">
     {() => <Deliveries setProducts={setProducts}/>}
     </Tab.Screen>
+    <Tab.Screen name="Skicka">
+        {() => <Ship/>}
+      </Tab.Screen>
     {isLoggedIn ?
       <Tab.Screen name="Faktura">
         {() => <Invoices setIsLoggedIn={setIsLoggedIn}/>}

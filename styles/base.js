@@ -23,3 +23,13 @@ export const lagertext = {
 export const delivery = {
   margin:20,
 }
+
+// export const mapContainer = {
+//   flex: 1,
+//   justifyContentn: "flex-end",
+//   alignItems: "center"
+// };
+
+// export const map = {
+//   ...StyleSheet.absoluteFillObject,
+// }
