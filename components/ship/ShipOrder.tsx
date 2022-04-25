@@ -19,18 +19,18 @@ export default function ShipOrder({ route }){
             console.log(result)
 
             setMarker(<Marker
-                coordinate={{latitude: parseFloat(result[0].lat), longitude: parseFloat(result[0].lon)}}
-                title={result[0].display_name}
-            />);
+                coordinate={{ latitude: parseFloat(results[0].lat), longitude: parseFloat(results[0].lon) }}
+                title={results[0].display_name}
+            />)
 
         })();
     }, [])
 
     useEffect(() => {
         (async () => {
-            const {status} = await Location.requestBackgroundPermissionsAsync();
+            const {status} = await Location.requestForegroundPermissionsAsync();
             if (status !== "granted") {
-                setErrorMessage("Permission to access location was denied")
+                setErrorMessage("Permission to access location was denied");
                 return;
             }
 
@@ -41,29 +41,36 @@ export default function ShipOrder({ route }){
                     longitude: currentLocation.coords.longitude
                 }}
                 title="Min Plats"
-                pinColor="green"
+                pinColor="purple"
                 />);
 
         })();
     }, [])
 
     return (
-        <View style={styles.container}>
-            <Text style={Typography.header2}>Skicka Order</Text>
-            <MapView
-                style={styles.map}
-                initialRegion={{
-                    latitude:56.162,
-                    longitude:15.5869,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1
-                }}
-            />
-            {marker}
-            {locationMarker}
+        <View style={Base.base}>
+        <Text style={Typography.header2}>Skicka order</Text>
+        <Text style={Typography.normal}>Namn: {order.name}</Text>
+        <Text style={Typography.normal}>Adress: {order.address}</Text>
+        <Text style={Typography.normal}>City:{order.city}</Text>
+        <Text style={Typography.normal}>Zip: {order.zip} </Text>
+            <View style={styles.container}>
+                <Text style={Typography.header2}>Skicka Order</Text>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude:56.162,
+                        longitude:15.5869,
+                        latitudeDelta: 0.1,
+                        longitudeDelta: 0.1
+                    }}>
+                {marker}
+                {locationMarker}
+                </MapView>
+            </View>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {

@@ -4,8 +4,22 @@ import orders from '../../models/orders';
 import config from "../../config/config.json";
 import { Typography,Base } from '../../styles';
 
-export default function ShipList({ navigation }) {
+export default function ShipList({ navigation, route }) {
     const [allOrders, setAllOrders] = useState([]);
+    const { reload } = route.params || true;
+
+    if(reload) {
+        reloadOrders();
+        route.params = false;
+    }
+
+    async function reloadOrders() {
+        setAllOrders(await orders.getOrders());
+    }
+
+    useEffect(() => {
+        reloadOrders();
+    }, []);
 
     useEffect(() => {
         fetch(`${config.base_url}/orders?api_key=${config.api_key}`)
