@@ -11,16 +11,17 @@ import getCoordinates from "../../models/nominatim";
 export default function ShipOrder({ route }){
     const { order } = route.params;
     const [marker, setMarker] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
     const [locationMarker, setLocationMarker] = useState(null);
 
     useEffect(() => {
         (async () => {
-            const result = await getCoordinates(`${order.adress},${order.city}`)
-            console.log(result)
+            const result = await getCoordinates(`${order.address},${order.city}`)
 
             setMarker(<Marker
-                coordinate={{ latitude: parseFloat(results[0].lat), longitude: parseFloat(results[0].lon) }}
-                title={results[0].display_name}
+                coordinate={{ latitude: parseFloat(result[0].lat), longitude: parseFloat(result[0].lon) }}
+                title={result[0].display_name}
+                pinColor="red"
             />)
 
         })();
