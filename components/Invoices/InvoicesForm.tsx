@@ -20,8 +20,8 @@ export default function InvoicesForm({navigation, route }) {
     }
 
     return (
-        <ScrollView >
-            <Text>Ny faktura</Text>
+        <ScrollView contentContainerStyle={{ ...Base.base }}>
+            <Text style={{ ...Typography.label }}>Ny faktura</Text>
             <OrderDropDown
                 invoice={invoice}
                 setInvoice={setInvoice}
@@ -29,7 +29,7 @@ export default function InvoicesForm({navigation, route }) {
                 setCurrentOrder={setCurrentOrder}
             />
 
-        <Text>Faktura Förfallodatumn</Text>
+        <Text style={{ ...Typography.label }}>Faktura Förfallodatumn</Text>
         <DateDropDown
                 invoice={invoice}
                 setInvoice={setInvoice}/>
@@ -73,7 +73,7 @@ function OrderDropDown(props) {
     return (
         <Picker
             selectedValue={props.invoice?.order_id}
-            onValueChanged={(itemValue) => {
+            onValueChange={(itemValue) => {
                 props.setInvoice({ ...props.invoice, order_id: itemValue });
                 props.setCurrentOrder(orderHash[itemValue]);
             }}>

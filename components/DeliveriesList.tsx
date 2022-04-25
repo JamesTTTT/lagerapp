@@ -23,6 +23,7 @@ export default function DeliveriesList({route, navigation }) {
           .then(result => setDeliveryList(result.data));
     }, []);
 
+
     const listOfDeliveries = deliveryList.map((item, index) => {
             return <Text key={index} style={Forms.input}>
                Produkt: {item.product_name}{"\n"}

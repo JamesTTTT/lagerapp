@@ -16,7 +16,7 @@ const invoices = {
     },
 
     createInvoice: async function createInvoice(invoiceObject: Partial<Invoice>) {
-        let order = await orderModel.getOrders(invoiceObject.order_id);
+        let order = await orderModel.getSingleOrder(invoiceObject.order_id);
 
         order.status_id = 600;
         orderModel.updateOrder(order);
@@ -35,7 +35,7 @@ const invoices = {
         const tokenObject: any = await storage.readToken();
 
         try {
-            const response = await 
+            const respons = await 
             fetch(`${config.base_url}/invoices`, {
                 body: JSON.stringify(invoiceObject),
                 headers: {

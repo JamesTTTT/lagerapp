@@ -1,8 +1,9 @@
 export const base = {
     flex: 1,
-    textAlign: 'center',
-    alignContent:'center',
-    justifyContent: 'center',
+    // flexDirections:'column',
+    // textAlign: 'center',
+    // alignItems:'flex-start',
+    // justifyContent: 'center',
     backgroundColor: '#eeeeee',
     paddingLeft: 12,
     paddingRight: 12,

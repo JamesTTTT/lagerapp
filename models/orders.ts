@@ -11,6 +11,14 @@ const orders = {
 
         return result.data;
     },
+
+    getSingleOrder: async function getSingleOrder(order_id: number) {
+        const response = await fetch(`${config.base_url}/orders/${order_id}?api_key=${config.api_key}`);
+        const result = await response.json();
+
+        return result.data;
+    },
+
     pickOrder: async function pickOrder(order: Partial<Order>) {
         // TODO: Minska lagersaldo för de
         // orderrader som finns i ordern

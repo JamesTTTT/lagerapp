@@ -39,7 +39,7 @@ export default function InvoiceList({ route, navigation, setIsLoggedIn }) {
     });
 
     return (
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ ...Base.base }}>
             <Text style={Typography.header2}>Fakturor</Text>
             <DataTable>
                 <DataTable.Header>
