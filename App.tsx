@@ -14,6 +14,7 @@ import { Base, Typography } from './styles';
 
 import Auth from "./components/Auth/Auth";
 import authModel from "./models/auth";
+import FlashMessage from 'react-native-flash-message';
 
 //6c76592d46c196c26798a89f1090c4c7
 const Tab = createBottomTabNavigator();
@@ -71,6 +72,7 @@ export default function App() {
   </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
+    <FlashMessage position="top"/>
     </SafeAreaView>
   );
 }
