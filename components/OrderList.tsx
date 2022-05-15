@@ -3,7 +3,7 @@ import { View, Text, Button } from "react-native";
 import orders from '../models/orders';
 import config from "./../config/config.json";
 
-export default function OrderList({route, navigation }) {
+export default function OrderList({route, navigation, }) {
     const { reload } = route.params ||false;
     const [allOrders, setAllOrders] = useState([]);
 
