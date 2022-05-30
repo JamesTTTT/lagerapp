@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Platform, ScrollView, Text, TextInput, Button, View, KeyboardAvoidingView} from "react-native";
 import { Base, Typography, Forms } from '../styles';
+import { showMessage } from "react-native-flash-message";
 import { Picker } from '@react-native-picker/picker';
 import productModel from "../models/product";
 import deliveryModel from "../models/deliveries"
@@ -12,6 +13,26 @@ import Delivery from '../interfaces/delivery';
 export default function DeliveryForm({navigation, setProducts  }) {
     const [delivery, setDelivery] = useState<Partial<Delivery>>({});
     const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
+
+    function validateAmount(number: number) {
+        if (number > 1) {
+            showMessage({
+                message:"The amount of products is invalid",
+                description: "The amount of products has to be atleat one",
+                type: "warning"
+            })
+        }
+    }
+
+    function validateComment(text: string) {
+        if (text.length > 10) {
+            showMessage({
+                message:"The comment is invalid",
+                description: "Enter a comment with more than ten charaters",
+                type: "warning"
+            })
+        }
+    }
 
     async function addDelivery() {
         await deliveryModel.addDelivery(delivery);
@@ -47,6 +68,7 @@ export default function DeliveryForm({navigation, setProducts  }) {
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
+                    validateAmount(parseInt(content))
                     setDelivery({ ...delivery, amount: parseInt(content) })
                 }}
                 value={delivery?.amount?.toString()}
@@ -57,6 +79,7 @@ export default function DeliveryForm({navigation, setProducts  }) {
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
+                    validateComment(content)
                     setDelivery({ ...delivery, comment: content})
                 }}
                 value={delivery?.comment}
