@@ -6,11 +6,12 @@ import config from "./../config/config.json";
 import deliveries from "../models/deliveries";
 export default function DeliveriesList({route, navigation }) {
 
-    const { reload } = route.params ||false;
+    const { reload } = route.params || true;
     const [deliveryList, setDeliveryList] = useState([]);
 
     if(reload) {
         reloadDeliveires();
+        route.params = false;
     }
 
     async function reloadDeliveires() {
@@ -18,9 +19,7 @@ export default function DeliveriesList({route, navigation }) {
     }
 
     useEffect(() => {
-        fetch(`${config.base_url}/deliveries?api_key=${config.api_key}`)
-          .then(response => response.json())
-          .then(result => setDeliveryList(result.data));
+        reloadDeliveires()
     }, []);
 
 

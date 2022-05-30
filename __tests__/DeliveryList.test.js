@@ -1,23 +1,20 @@
-// import { render } from "@testing-library/react-native";
-// import DeliveryList from "../components/Deliveries";
+import { render } from "@testing-library/react-native";
+import DeliveryList from "../components/DeliveriesList";
 
-// global.fetch = jest.fn(() =>
-//   Promise.resolve({
-//     json: () => Promise.resolve(result.data),
-//   })
-// );
+jest.mock("../components/Deliveries", ()=>"Deliveries");
 
-// const navigation = () => {
-//     navigate: jest.fn()
-// }
-// const route = { params: false}
-
-// test('test that DeliveryList contains add delivery button ', async() => {
+test('test that DeliveryList contains add delivery button ', async() => {
     
-//     const { getAllByText } = render(<DeliveryList navigation={navigation} route={route}/>)
-//     // const header = await getAllBy('Inleveranser');
-//     const btn = await getAllByText("Skapa ny inleverans")
+    const { getByText } = render(<DeliveryList route={true} />)
+    const btn = await getByText("Skapa ny inleverans")
 
-//     // expect(header).toBeDefined();
-//     expect(btn).toBeDefined();
-// })
+    expect(btn).toBeDefined();
+})
+
+test('test that DeliveryList contains header inleveranser ', async() => {
+    
+    const { getByText } = render(<DeliveryList route={true} />)
+    const header = await getByText("Inleveranser")
+
+    expect(header).toBeDefined();
+})

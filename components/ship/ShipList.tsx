@@ -3,17 +3,24 @@ import { View, Text, Button } from "react-native";
 import orders from '../../models/orders';
 import config from "../../config/config.json";
 import { Typography,Base } from '../../styles';
+import orderModel from "../../models/orders";
 
 export default function ShipList({ navigation, route }) {
     const [allOrders, setAllOrders] = useState([]);
     const { reload } = route.params || true;
 
+    if(reload) {
+        reloadOrders();
+        route.params = false;
+    }
 
     useEffect(() => {
-        fetch(`${config.base_url}/orders?api_key=${config.api_key}`)
-          .then(response => response.json())
-          .then(result => setAllOrders(result.data));
+        reloadOrders();
     }, []);
+
+    async function reloadOrders() {
+        setAllOrders(await orderModel.getOrders());
+    }
 
     const listOfOrders = allOrders
     .filter(order => order.status === "Packad")
